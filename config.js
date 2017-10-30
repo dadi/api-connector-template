@@ -1,6 +1,5 @@
-var convict = require('convict')
-
-var conf = convict({
+const convict = require('convict')
+const conf = convict({
   env: {
     doc: "The applicaton environment.",
     format: String,
@@ -16,9 +15,7 @@ var conf = convict({
 })
 
 // Load environment dependent configuration
-var env = conf.get('env')
+const env = conf.get('env')
 conf.loadFile('./config/datastore.' + env + '.json')
-
-conf.validate({strict: false})
 
 module.exports = conf
