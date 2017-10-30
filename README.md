@@ -23,6 +23,8 @@ Establishes a connection to the database. API calls it both when establishing a 
 - `DB_ERROR`: when the database connection is closed or times out; an optional error object can be sent as a parameter
 - `DB_RECONNECTED`: when the database connection is re-established
 
+---
+
 ### `find(query, collection, options, schema)`
 
 Finds documents in a collection.
@@ -39,6 +41,8 @@ Finds documents in a collection.
   - `metadata`: A metadata object, with the format used by [@dadi/metadata](https://github.com/dadi/metadata)
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `insert(data, collection, schema)`
 
 Creates documents in a collection.
@@ -51,6 +55,8 @@ Creates documents in a collection.
 **Return value:**
 - `Promise` resolved with an object containing an array with the inserted documents
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ### `update(query, collection, update, options, schema)`
 
@@ -67,6 +73,8 @@ Updates documents in a collection.
 - `Promise` resolved with an object containing a `matchedCount` property, with a count of the number of documents affected by the update operation
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `delete(query, collection, schema)`
 
 Deletes documents from a collection.
@@ -79,6 +87,8 @@ Deletes documents from a collection.
 **Return value:**
 - `Promise` resolved with an object containing a `deletedCount` property, with a count of the number of documents affected by the delete operation
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ### `stats(collection, options)`
 
@@ -99,6 +109,8 @@ Gets statistics about the collection.
   - `indexSizes`
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `index(collection, indexes)`
 
 Creates indexes in the collection.
@@ -111,6 +123,8 @@ Creates indexes in the collection.
 - `Promise` resolved with an an array of objects representing the indexes, with the name of the collection and the name of the index in the `collection` and `index` properties respectively
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `getIndexes(collection)`
 
 Retrieves indexes from a collection.
@@ -122,6 +136,8 @@ Retrieves indexes from a collection.
 - `Promise` resolved with an an array of objects representing the indexes, each with the name of the index in an `name` property
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `dropDatabase(collection)`
 
 Removes a collection from a database or drops the database completely.
@@ -132,6 +148,8 @@ Removes a collection from a database or drops the database completely.
 **Return value:**
 - `Promise` resolved with `undefined`
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ## Configuration
 
