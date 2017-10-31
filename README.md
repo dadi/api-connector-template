@@ -1,5 +1,7 @@
 # DADI API Data Connector
 
+This repository specifies the interface required to build a database connector for DADI API.
+
 ## Exports
 
 Data connectors must export a constructor function at the root level, which will receive the config object. The constructor should have the following methods in its prototype chain.
@@ -23,7 +25,7 @@ Establishes a connection to the database. API calls it both when establishing a 
 - `DB_ERROR`: when the database connection is closed or times out; an optional error object can be sent as a parameter
 - `DB_RECONNECTED`: when the database connection is re-established
 
-### `find(query, collection, options, schema)`
+### `find({ query, collection, options = {}, schema, settings })`
 
 Finds documents in a collection.
 
@@ -32,6 +34,7 @@ Finds documents in a collection.
 - `collection` {String}: the name of the collection to query
 - `options` {QueryOptions}: a set of query options, such as offset, limit, sort, fields
 - `schema` {Object}: the JSON schema for the collection
+- `settings` {Object}: the settings block of the collection schema
 
 **Return value:**
 - `Promise` resolved with an object containing:
@@ -39,7 +42,7 @@ Finds documents in a collection.
   - `metadata`: A metadata object, with the format used by [@dadi/metadata](https://github.com/dadi/metadata)
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
-### `insert(data, collection, schema)`
+### `insert({data, collection, options = {}, schema, settings = {}})`
 
 Creates documents in a collection.
 
@@ -47,12 +50,13 @@ Creates documents in a collection.
 - `data` {Object}: a single document or an Array of documents to insert
 - `collection` {String}: the name of the collection to query
 - `schema` {Object}: the JSON schema for the collection
+- `settings` {Object}: the settings block of the collection schema
 
 **Return value:**
 - `Promise` resolved with an object containing an array with the inserted documents
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
-### `update(query, collection, update, options, schema)`
+### `update({query, collection, update, options = {}, schema})`
 
 Updates documents in a collection.
 
@@ -67,7 +71,7 @@ Updates documents in a collection.
 - `Promise` resolved with an object containing a `matchedCount` property, with a count of the number of documents affected by the update operation
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
-### `delete(query, collection, schema)`
+### `delete({query, collection, schema})`
 
 Deletes documents from a collection.
 
@@ -162,3 +166,39 @@ For example:
   }
 }
 ```
+
+## Licence
+
+DADI is a data centric development and delivery stack, built specifically in support of the principles of API first and COPE.
+
+Copyright notice<br />
+(C) 2017 DADI+ Limited <support@dadi.tech><br />
+All rights reserved
+
+This product is part of DADI.<br />
+DADI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version ("the GPL").
+
+**If you wish to use DADI outside the scope of the GPL, please
+contact us at info@dadi.co for details of alternative licence
+arrangements.**
+
+**This product may be distributed alongside other components
+available under different licences (which may not be GPL). See
+those components themselves, or the documentation accompanying
+them, to determine what licences are applicable.**
+
+DADI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+The GNU General Public License (GPL) is available at
+http://www.gnu.org/licenses/gpl-3.0.en.html.<br />
+A copy can be found in the file GPL.md distributed with
+these files.
+
+This copyright notice MUST APPEAR in all copies of the product!
+
