@@ -4,7 +4,19 @@ This repository specifies the interface required to build a database connector f
 
 ## Exports
 
-Data connectors must export a constructor function at the root level, which will receive the config object. The constructor should have the following methods in its prototype chain.
+Data connectors must export a constructor function at the root level. The constructor receives an optional object with config parameter overrides, and it should have the following methods in its prototype chain.
+
+```js
+const MyDataConnector = function (options) {
+  this.config = Object.assign({}, config, options)
+}
+
+MyDataConnector.prototype.connect = function ({database, collection}) {
+  // ...
+}
+
+module.exports = MyDataConnector
+```
 
 ## Methods
 
