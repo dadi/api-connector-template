@@ -84,6 +84,8 @@ Deletes documents from a collection.
 - `Promise` resolved with an object containing a `deletedCount` property, with a count of the number of documents affected by the delete operation
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `stats(collection, options)`
 
 Gets statistics about the collection.
@@ -103,6 +105,8 @@ Gets statistics about the collection.
   - `indexSizes`
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `index(collection, indexes)`
 
 Creates indexes in the collection.
@@ -115,6 +119,8 @@ Creates indexes in the collection.
 - `Promise` resolved with an an array of objects representing the indexes, with the name of the collection and the name of the index in the `collection` and `index` properties respectively
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `getIndexes(collection)`
 
 Retrieves indexes from a collection.
@@ -126,6 +132,8 @@ Retrieves indexes from a collection.
 - `Promise` resolved with an an array of objects representing the indexes, each with the name of the index in an `name` property
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `dropDatabase(collection)`
 
 Removes a collection from a database or drops the database completely.
@@ -136,6 +144,8 @@ Removes a collection from a database or drops the database completely.
 **Return value:**
 - `Promise` resolved with `undefined`
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ## Configuration
 
