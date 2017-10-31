@@ -8,6 +8,18 @@ Data connectors must export a constructor function at the root level, which will
 
 ## Methods
 
+- [`connect()`](#connectdatabase-collection)
+- [`find()`](#find-query-collection-options---schema-settings-)
+- [`insert()`](#insertdata-collection-options---schema-settings--)
+- [`update()`](#updatequery-collection-update-options---schema)
+- [`delete()`](#deletequery-collection-schema)
+- [`stats()`](#statscollection-options)
+- [`index()`](#indexcollection-indexes)
+- [`getIndexes()`](#getindexescollection)
+- [`dropDatabases()`](#dropdatabasecollection)
+
+---
+
 ### `connect({database, collection})`
 
 Establishes a connection to the database. API calls it both when establishing a connection for the first time and also when attempting a reconnection.
@@ -24,6 +36,8 @@ Establishes a connection to the database. API calls it both when establishing a 
 - `DB_CONNECTED`: when the database connection is established
 - `DB_ERROR`: when the database connection is closed or times out; an optional error object can be sent as a parameter
 - `DB_RECONNECTED`: when the database connection is re-established
+
+---
 
 ### `find({ query, collection, options = {}, schema, settings })`
 
@@ -42,6 +56,8 @@ Finds documents in a collection.
   - `metadata`: A metadata object, with the format used by [@dadi/metadata](https://github.com/dadi/metadata)
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
+---
+
 ### `insert({data, collection, options = {}, schema, settings = {}})`
 
 Creates documents in a collection.
@@ -55,6 +71,8 @@ Creates documents in a collection.
 **Return value:**
 - `Promise` resolved with an object containing an array with the inserted documents
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ### `update({query, collection, update, options = {}, schema})`
 
@@ -70,6 +88,8 @@ Updates documents in a collection.
 **Return value:**
 - `Promise` resolved with an object containing a `matchedCount` property, with a count of the number of documents affected by the update operation
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
+
+---
 
 ### `delete({query, collection, schema})`
 
