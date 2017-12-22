@@ -1,14 +1,14 @@
 const convict = require('convict')
 const conf = convict({
   env: {
-    doc: "The applicaton environment.",
+    doc: 'The applicaton environment.',
     format: String,
-    default: "development",
-    env: "NODE_ENV",
-    arg: "node_env"
+    default: 'development',
+    env: 'NODE_ENV',
+    arg: 'node_env'
   },
   database: {
-    doc: "",
+    doc: '',
     format: Object,
     default: {}
   }
@@ -16,6 +16,6 @@ const conf = convict({
 
 // Load environment dependent configuration
 const env = conf.get('env')
-conf.loadFile('./config/datastore.' + env + '.json')
+conf.loadFile('./config/apiConnector.' + env + '.json')
 
 module.exports = conf
