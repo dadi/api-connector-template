@@ -9,6 +9,12 @@ var uuid = require('uuid')
 
 var config = require(__dirname + '/../config')
 
+var usersSchema = {
+  name: {
+    type: 'String'
+  }
+}
+
 describe('ApiConnector', function () {
   this.timeout(3000)
 
@@ -77,13 +83,14 @@ describe('ApiConnector', function () {
     })
   })
 
-  describe.skip('insert', function () {
+  describe('insert', function () {
     it('should insert a single document into the database', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
         var user = { name: 'David' }
 
-        apiConnector.insert({data: user, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: user, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
+          console.log(results)
           results.constructor.name.should.eql('Array')
           results[0].name.should.eql('David')
           done()
@@ -91,12 +98,12 @@ describe('ApiConnector', function () {
       })
     })
 
-    it('should insert an array of documents into the database', function (done) {
+    it.skip('should insert an array of documents into the database', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
         var users = [{ name: 'Ernest' }, { name: 'Wallace' }]
 
-        apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
           results.constructor.name.should.eql('Array')
           results.length.should.eql(2)
           results[0].name.should.eql('Ernest')
@@ -109,11 +116,11 @@ describe('ApiConnector', function () {
     it('should add _id property if one isn\'t specified', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
-        var users = [{ name: 'Ernest' }, { name: 'Wallace' }]
+        var users = [{ name: 'Ernest' }]
 
-        apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
           results.constructor.name.should.eql('Array')
-          results.length.should.eql(2)
+          results.length.should.eql(1)
           results[0].name.should.eql('Ernest')
           should.exist(results[0]._id)
           done()
@@ -124,11 +131,11 @@ describe('ApiConnector', function () {
     it('should use specified _id property if one is specified', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
-        var users = [{ _id: uuid.v4(), name: 'Ernest' }, { name: 'Wallace' }]
+        var users = [{ _id: uuid.v4(), name: 'Ernest' }]
 
-        apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
           results.constructor.name.should.eql('Array')
-          results.length.should.eql(2)
+          results.length.should.eql(1)
           results[0].name.should.eql('Ernest')
           results[0]._id.should.eql(users[0]._id)
           done()
@@ -143,7 +150,7 @@ describe('ApiConnector', function () {
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
         var users = [{ name: 'Ernest' }, { name: 'Wallace' }]
 
-        apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
           apiConnector.find({ name: 'Wallace' }, 'users', {}).then((results) => {
             results.constructor.name.should.eql('Array')
             results[0].name.should.eql('Wallace')
@@ -161,7 +168,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'BigBird' }, { name: 'Ernie' }, { name: 'Oscar' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({}, 'users', { limit: 2 }).then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(2)
@@ -184,7 +191,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'Ernie' }, { name: 'Oscar' }, { name: 'BigBird' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({}, 'users').then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(3)
@@ -211,7 +218,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'BigBird 3' }, { name: 'BigBird 1' }, { name: 'BigBird 2' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({ name: { '$regex': 'Big' } }, 'users').then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(3)
@@ -237,7 +244,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'Ernie' }, { name: 'Oscar' }, { name: 'BigBird' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({}, 'users', { sort: { name: 1 } }).then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(3)
@@ -263,7 +270,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'Ernie' }, { name: 'Oscar' }, { name: 'BigBird' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({}, 'users', { sort: { name: -1 } }).then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(3)
@@ -289,7 +296,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'Ernie', age: 7, colour: 'yellow' }, { name: 'Oscar', age: 9, colour: 'green' }, { name: 'BigBird', age: 13, colour: 'yellow' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.find({ colour: 'yellow' }, 'users', { sort: { name: 1 }, fields: { name: 1, age: 1 } }).then((results) => {
               results.constructor.name.should.eql('Array')
               results.length.should.eql(2)
@@ -321,7 +328,7 @@ describe('ApiConnector', function () {
 
             var users = [{ name: 'Ernie', age: 7, colour: 'yellow' }, { name: 'Oscar', age: 9, colour: 'green' }, { name: 'BigBird', age: 13, colour: 'yellow' }]
 
-            apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+            apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
               apiConnector.update({ colour: 'green' }, 'users', { '$set': { colour: 'yellow' } }).then((results) => {
                 apiConnector.find({ colour: 'yellow' }, 'users', {}).then((results) => {
                   results.constructor.name.should.eql('Array')
@@ -350,7 +357,7 @@ describe('ApiConnector', function () {
 
             var users = [{ name: 'Ernie', age: 7, colour: 'yellow' }, { name: 'Oscar', age: 9, colour: 'green' }, { name: 'BigBird', age: 13, colour: 'yellow' }]
 
-            apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+            apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
               apiConnector.update({ colour: 'green' }, 'users', { '$inc': { age: 10 } }).then((results) => {
                 apiConnector.find({ colour: 'green' }, 'users', {}).then((results) => {
                   results.constructor.name.should.eql('Array')
@@ -381,7 +388,7 @@ describe('ApiConnector', function () {
 
           var users = [{ name: 'Ernie', age: 7, colour: 'yellow' }, { name: 'Oscar', age: 9, colour: 'green' }, { name: 'BigBird', age: 13, colour: 'yellow' }]
 
-          apiConnector.insert({data: users, collection: 'users', options: {}}).then((results) => {
+          apiConnector.insert({data: users, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
             apiConnector.delete({ colour: 'green' }, 'users').then((results) => {
               apiConnector.find({}, 'users', {}).then((results) => {
                 results.constructor.name.should.eql('Array')
@@ -407,14 +414,14 @@ describe('ApiConnector', function () {
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
         var user = { name: 'David' }
 
-        apiConnector.insert({data: user, collection: 'users', options: {}}).then((results) => {
+        apiConnector.insert({data: user, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
           results.constructor.name.should.eql('Array')
           results[0].name.should.eql('David')
 
           apiConnector.connect({ database: 'content', collection: 'posts' }).then(() => {
             var post = { title: 'David on Holiday' }
 
-            apiConnector.insert({data: post, collection: 'posts', options: {}}).then((results) => {
+            apiConnector.insert({data: post, collection: 'posts', options: {}, schema: usersSchema}).then((results) => {
               results.constructor.name.should.eql('Array')
               results[0].title.should.eql('David on Holiday')
 
@@ -439,8 +446,8 @@ describe('ApiConnector', function () {
 
       contentStore.connect({ database: 'content' }).then(() => {
         authStore.connect({ database: 'auth' }).then(() => {
-          contentStore.insert({data: { name: 'Jim' }, collection: 'users', options: {}}).then((results) => {
-            authStore.insert({data: { token: '123456123456123456123456' }, collection: 'token-store', options: {}}).then((results) => {
+          contentStore.insert({data: { name: 'Jim' }, collection: 'users', options: {}, schema: usersSchema}).then((results) => {
+            authStore.insert({data: { token: '123456123456123456123456' }, collection: 'token-store', options: {}, schema: usersSchema}).then((results) => {
               contentStore.find({ name: 'Jim' }, 'users', {}).then((results) => {
                 results.constructor.name.should.eql('Array')
                 results[0].name.should.eql('Jim')
