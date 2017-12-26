@@ -19,12 +19,7 @@ describe('ApiConnector', function () {
   this.timeout(3000)
 
   beforeEach(function (done) {
-    var apiConnector = new ApiConnector()
-    apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
-      apiConnector.dropDatabase('users').then(() => {
-        done()
-      })
-    })
+    done()
   })
 
   afterEach(function (done) {
