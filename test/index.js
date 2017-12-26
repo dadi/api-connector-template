@@ -88,7 +88,7 @@ describe('ApiConnector', function () {
     })
   })
 
-  describe('insert', function () {
+  describe.skip('insert', function () {
     it('should insert a single document into the database', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
@@ -148,7 +148,7 @@ describe('ApiConnector', function () {
     })
   })
 
-  describe('find', function () {
+  describe.skip('find', function () {
     it('should find a single document in the database', function (done) {
       var apiConnector = new ApiConnector()
       apiConnector.connect({ database: 'content', collection: 'users' }).then(() => {
