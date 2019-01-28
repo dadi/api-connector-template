@@ -148,7 +148,7 @@ Creates indexes in the collection.
 - `indexes` {Object}: an array of indexes to create for the collection
 
 **Return value:**
-- `Promise` resolved with an an array of objects representing the indexes, with the name of the collection and the name of the index in the `collection` and `index` properties respectively
+- `Promise` resolved with an array of objects representing the indexes, with the name of the collection and the name of the index in the `collection` and `index` properties respectively
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
 ---
@@ -161,7 +161,7 @@ Retrieves indexes from a collection.
 - `collection` {String}: the name of the collection to get indexes for
 
 **Return value:**
-- `Promise` resolved with an an array of objects representing the indexes, each with the name of the index in an `name` property
+- `Promise` resolved with an array of objects representing the indexes, each with the name of the index in an `name` property
 - `Promise` rejected with an `Error` object, with a message of `DB_DISCONNECTED`, if the connection to the database is unavailable
 
 ---
